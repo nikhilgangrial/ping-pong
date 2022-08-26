@@ -1,0 +1,396 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://assets/ball.png" type="Texture" id=1]
+[ext_resource path="res://assets/bar.png" type="Texture" id=2]
+[ext_resource path="res://main.gd" type="Script" id=3]
+[ext_resource path="res://assets/font.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/barhit.wav" type="AudioStream" id=5]
+[ext_resource path="res://assets/big font.tres" type="DynamicFont" id=6]
+[ext_resource path="res://assets/pause.png" type="Texture" id=7]
+[ext_resource path="res://assets/close.tres" type="StyleBox" id=8]
+[ext_resource path="res://assets/music.png" type="Texture" id=9]
+[ext_resource path="res://assets/mute.png" type="Texture" id=10]
+[ext_resource path="res://assets/reset.tres" type="StyleBox" id=11]
+[ext_resource path="res://Environment.tscn" type="PackedScene" id=12]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 30.0
+
+[sub_resource type="ImageTexture" id=2]
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 0 ), 0.0, 1.0, 0, 1, Vector2( 1, 1 ), 1.0, 0.0, 1, 0 ]
+
+[sub_resource type="Gradient" id=4]
+colors = PoolColorArray( 0, 0, 0.558594, 0, 0, 0.0931396, 0.851563, 1 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 25, 135 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.0588235, 0.0509804, 0.0509804, 1 )
+border_width_top = 1
+border_width_right = 2
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="InputEventAction" id=7]
+action = "ui_cancel"
+pressed = true
+
+[sub_resource type="ShortCut" id=8]
+shortcut = SubResource( 7 )
+
+[sub_resource type="Theme" id=9]
+default_font = ExtResource( 4 )
+
+[node name="Node" type="Node"]
+script = ExtResource( 3 )
+
+[node name="Ball" type="KinematicBody2D" parent="."]
+process_priority = -2
+show_behind_parent = true
+position = Vector2( 80, 540 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Ball"]
+modulate = Color( 1, 1, 101.016, 1 )
+self_modulate = Color( 0.137255, 0.278431, 0.909804, 1 )
+show_behind_parent = true
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 1 )
+normal_map = SubResource( 2 )
+__meta__ = {
+"_editor_description_": "imge res is 60x60"
+}
+
+[node name="Line2D" type="Line2D" parent="Ball"]
+z_index = -1
+points = PoolVector2Array( -0.227844, 2.91846 )
+width = 50.0
+width_curve = SubResource( 3 )
+gradient = SubResource( 4 )
+antialiased = true
+
+[node name="Player" type="StaticBody2D" parent="."]
+process_priority = -1
+show_behind_parent = true
+light_mask = -2147483647
+position = Vector2( 25, 540 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="Player"]
+modulate = Color( 1, 10, 10, 1 )
+self_modulate = Color( 0, 1, 1, 1 )
+texture = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": "image res=250x50"
+}
+
+[node name="Comp" type="StaticBody2D" parent="."]
+process_priority = -2
+show_behind_parent = true
+position = Vector2( 1895, 540 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Comp"]
+shape = SubResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="Comp"]
+modulate = Color( 12, 12, 1, 1 )
+self_modulate = Color( 0.96875, 1, 0, 1 )
+texture = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": "image res=250x50"
+}
+
+[node name="Score" type="Label" parent="."]
+anchor_left = 0.87
+anchor_top = 0.037
+anchor_right = 0.87
+anchor_bottom = 0.037
+margin_left = -110.4
+margin_top = -34.96
+margin_right = 129.6
+margin_bottom = 36.04
+custom_fonts/font = ExtResource( 4 )
+text = "Score:  0"
+align = 1
+valign = 1
+autowrap = true
+clip_text = true
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+modulate = Color( 1.2, 1.2, 1.2, 1 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -963.564
+margin_top = -547.127
+margin_right = 1436.44
+margin_bottom = 802.873
+grow_horizontal = 2
+grow_vertical = 2
+rect_scale = Vector2( 0.8, 0.8 )
+size_flags_stretch_ratio = 1.92
+custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "tap to start"
+align = 1
+valign = 1
+autowrap = true
+clip_text = true
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Barhit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+pitch_scale = 1.5
+
+[node name="SideHit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+pitch_scale = 2.03
+
+[node name="Pause" type="TextureButton" parent="."]
+pause_mode = 2
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 888.564
+margin_top = -530.0
+margin_right = 1038.56
+margin_bottom = -380.0
+rect_scale = Vector2( 0.35, 0.35 )
+focus_mode = 0
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 7 )
+texture_hover = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PausePanel" type="Panel" parent="."]
+pause_mode = 2
+visible = false
+light_mask = 0
+margin_left = 360.0
+margin_top = 140.0
+margin_right = 1560.0
+margin_bottom = 940.0
+custom_styles/panel = SubResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Senstivity" type="HSlider" parent="PausePanel"]
+margin_left = 415.0
+margin_top = 360.0
+margin_right = 977.0
+margin_bottom = 395.0
+rect_min_size = Vector2( 562, 31 )
+max_value = 50.0
+value = 25.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="s_text" type="Label" parent="PausePanel"]
+margin_left = 1020.0
+margin_top = 360.0
+margin_right = 1165.0
+margin_bottom = 410.0
+custom_fonts/font = ExtResource( 4 )
+text = "25"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ball_speed" type="HSlider" parent="PausePanel"]
+margin_left = 415.0
+margin_top = 572.0
+margin_right = 977.0
+margin_bottom = 607.0
+min_value = 800.0
+max_value = 3500.0
+value = 1600.0
+
+[node name="ball_text" type="Label" parent="PausePanel"]
+margin_left = 1020.0
+margin_top = 560.0
+margin_right = 1165.0
+margin_bottom = 610.0
+custom_fonts/font = ExtResource( 4 )
+text = "1600"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bar_speed" type="HSlider" parent="PausePanel"]
+margin_left = 415.0
+margin_top = 465.0
+margin_right = 977.0
+margin_bottom = 500.0
+min_value = 1500.0
+max_value = 5000.0
+value = 2500.0
+
+[node name="close" type="Button" parent="PausePanel"]
+margin_left = 900.0
+margin_top = 175.0
+margin_right = 960.0
+margin_bottom = 225.0
+rect_min_size = Vector2( 60, 50 )
+rect_scale = Vector2( 1.8, 1.8 )
+custom_styles/hover = ExtResource( 8 )
+custom_styles/pressed = ExtResource( 8 )
+custom_styles/focus = ExtResource( 8 )
+custom_styles/disabled = ExtResource( 8 )
+custom_styles/normal = ExtResource( 8 )
+shortcut = SubResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="b_text" type="Label" parent="PausePanel"]
+margin_left = 1030.0
+margin_top = 460.0
+margin_right = 1144.0
+margin_bottom = 510.0
+custom_fonts/font = ExtResource( 4 )
+text = "2500"
+align = 1
+valign = 1
+
+[node name="Label" type="Label" parent="PausePanel"]
+margin_left = 97.0
+margin_top = 351.0
+margin_right = 361.0
+margin_bottom = 666.0
+custom_fonts/font = ExtResource( 4 )
+text = "Senstivity:
+
+Bar Speed:
+
+Ball Speed:
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="PausePanel"]
+wait_time = 0.2
+one_shot = true
+
+[node name="Music" type="CheckButton" parent="PausePanel"]
+anchor_left = 0.756
+anchor_top = 0.21
+anchor_right = 0.756
+anchor_bottom = 0.21
+margin_left = -357.2
+margin_top = 2.00002
+margin_right = -233.2
+margin_bottom = 115.0
+rect_min_size = Vector2( 124, 113 )
+focus_mode = 0
+custom_icons/off = ExtResource( 10 )
+custom_icons/on = ExtResource( 9 )
+shortcut_in_tooltip = false
+pressed = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Reset" type="Button" parent="PausePanel"]
+anchor_left = 0.163
+anchor_top = 0.281
+anchor_right = 0.163
+anchor_bottom = 0.281
+margin_left = -45.6
+margin_top = -44.8
+margin_right = 45.3999
+margin_bottom = 43.2
+custom_styles/hover = ExtResource( 11 )
+custom_styles/pressed = ExtResource( 11 )
+custom_styles/focus = ExtResource( 11 )
+custom_styles/disabled = ExtResource( 11 )
+custom_styles/normal = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="quit" type="Button" parent="PausePanel"]
+margin_left = 80.0
+margin_top = 690.0
+margin_right = 363.0
+margin_bottom = 753.0
+custom_fonts/font = ExtResource( 4 )
+text = "Quit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="PausePanel"]
+margin_left = 710.0
+margin_top = 440.0
+margin_right = 1210.0
+margin_bottom = 640.0
+rect_min_size = Vector2( 500, 200 )
+theme = SubResource( 9 )
+popup_exclusive = true
+window_title = ""
+dialog_text = "Do You Want To Close Game?"
+dialog_autowrap = true
+
+[node name="restart" type="Button" parent="PausePanel"]
+margin_left = 837.0
+margin_top = 690.0
+margin_right = 1120.0
+margin_bottom = 753.0
+custom_fonts/font = ExtResource( 4 )
+text = "Restart"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ConfirmationDialog2" type="ConfirmationDialog" parent="PausePanel"]
+margin_left = 710.0
+margin_top = 440.0
+margin_right = 1210.0
+margin_bottom = 640.0
+rect_min_size = Vector2( 500, 200 )
+theme = SubResource( 9 )
+popup_exclusive = true
+window_title = ""
+dialog_text = "Do You Want To Restart Game?"
+dialog_autowrap = true
+
+[node name="WorldEnvironment" parent="." instance=ExtResource( 12 )]
+[connection signal="hit_comp" from="." to="." method="_on_comp_hit"]
+[connection signal="hit_player" from="." to="." method="_on_player_hit"]
+[connection signal="hit_side" from="." to="." method="_on_side_hit"]
+[connection signal="pressed" from="Pause" to="." method="_on_Pause_pressed"]
+[connection signal="value_changed" from="PausePanel/Senstivity" to="." method="_on_Senstivity_value_changed"]
+[connection signal="value_changed" from="PausePanel/ball_speed" to="." method="_on_ball_speed_value_changed"]
+[connection signal="value_changed" from="PausePanel/Bar_speed" to="." method="_on_Bar_speed_value_changed"]
+[connection signal="pressed" from="PausePanel/close" to="." method="_on_pop_close"]
+[connection signal="timeout" from="PausePanel/Timer" to="." method="resume_"]
+[connection signal="toggled" from="PausePanel/Music" to="." method="_on_CheckButton_toggled"]
+[connection signal="button_down" from="PausePanel/Reset" to="." method="_on_Reset_button_down"]
+[connection signal="button_down" from="PausePanel/quit" to="." method="_on_Button_button_down"]
+[connection signal="confirmed" from="PausePanel/ConfirmationDialog" to="." method="_on_ConfirmationDialog_confirmed"]
+[connection signal="button_down" from="PausePanel/restart" to="." method="restart"]
+[connection signal="confirmed" from="PausePanel/ConfirmationDialog2" to="." method="_on_ConfirmationDialog2_confirmed"]

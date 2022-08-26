@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/TOYElec_Operation game 5 (ID 1686)_BSB.wav-8148d5dd6d85dc228eb3e0d3cb06a54c.sample"
+
+[deps]
+
+source_file="res://assets/TOYElec_Operation game 5 (ID 1686)_BSB.wav"
+dest_files=[ "res://.import/TOYElec_Operation game 5 (ID 1686)_BSB.wav-8148d5dd6d85dc228eb3e0d3cb06a54c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
